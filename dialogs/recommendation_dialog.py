@@ -76,9 +76,6 @@ class RecommendationDialog(CancelAndHelpDialog):
         :param step_context:
         :return DialogTurnResult
         """
-
-        print("Started a recommendation dialog!")
-
         recommendation_details = step_context.options
 
         # Inquire the user about the genre they'd like to listen to

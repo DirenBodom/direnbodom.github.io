@@ -31,13 +31,6 @@ class MainDialog(ComponentDialog):
             )
         )
 
-        # self.songs  = {'rock': ["Lucidity by Tame Impala", "Rattlesnake by King Gizzard and the Lizzard Wizard", "Sun Structures by Temples"],
-        #                 'metal': ["Lucretia by Megadeth", "Alison Hell by Annihilator", "One by Metallica"],
-        #                 'classical': ["Chopin Etude Op.10 No.3 in E Major", "Antonio Vivaldi - Four Seasons", "Danse Macabre by Camille Saint-Saëns"],
-        #                 'jazz': ["When Sunny Gets Blue by McCoy Tyner", "What A Difference A Day Makes by Beegie Adair", "Wave by Jack Jezzro"],
-        #                 'pop': ["Game of Love by Michelle Branch", "Ven Bailalo by Khriz y Angel", "Helena Beat by Foster the People"],
-        #                 'electronic': ["Synapse by Linea Aspera", "Blue Monday by New Order", "Numbers by Kraftwerk"]}
-
         self.songs = {'rock': [],
                         'metal': [],
                         'classical': [],
@@ -76,6 +69,7 @@ class MainDialog(ComponentDialog):
                             ['Kraftwerk', 'Numbers', 'Computer World', 'https://upload.wikimedia.org/wikipedia/en/a/a6/Kraftwerk_-_Computer_World.png']
                           ]
 
+        # Create objects from the above lists and add them to the songs list
         for song in self.rock:
             song_obj = SongClass(song[0], song[1], song[2], song[3])
             self.songs['rock'].append(song_obj)
