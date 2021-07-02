@@ -25,7 +25,7 @@ In this document we'll go through how to run Bronn on your local machine, as wel
 ## Prerequisites
 
 ### Install Python 3.6 - 3.8
-Currently the bot will only work if you run it using Python versions 3.6 to 3.8
+Currently I am testing
 
 ### Download the code
 You can find the bot code at its [Github Repository](https://github.com/DirenBodom/Bronn-Bot/tree/master). Make sure that you are using the master branch.
