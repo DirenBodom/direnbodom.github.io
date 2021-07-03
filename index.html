@@ -1,110 +1,129 @@
-﻿<!DOCTYPE html>
-<html lang="en-US" dir="ltr">
-<head>
-	<title>Untitled</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<meta http-equiv="imagetoolbar" content="no" />
-	<meta name="generator" content="ActivePresenter 8.3.2"/>
-	<meta name="author" content="User" />
-	<meta name="copyright" content=" " />
-	<meta name="description" content=""/>
+﻿<style type="text/css">
+  body {
+    margin: auto;
+	width: 50%;
+	padding: 10px;
+  }
+  .language-Python3 {background: rgba(0, 128, 0, 0.3);}
+</style>
 
-	<link rel="stylesheet" type="text/css" href="index.css" />
+<h1 id="bronn-music-recommendation-bot">Bronn Music Recommendation Bot</h1>
 
-	<script type="text/javascript">
-		var language = {"Tutorial":"Tutorial","Description":"Description","Author":"Author","DemoIntro":"Play presentation automatically","Copyright":"Copyright","TestIntro":"Choose this mode to do a test","Homepage":"Home page","Practice":"Practice","Test":"Test","Demo":"Demonstration","TutorialIntro":"Tutorial mode","PracticeIntro":"Choose this mode to practise more","OpenPrezError":"Could not open presentation.\nError: "};
-		var PlayModes = {
-			DEMO: 1,
-			TUT: 2,
-			PRAC: 4,
-			TEST: 8
-		};
+<p>The <em>Bronn Bot</em> was created to help users find music through a bot developed using the <a href="https://dev.botframework.com">Bot Framework</a>.
+In this document we’ll go through how to run Bronn on your local machine, as well has the key components which the bot is built upon.</p>
 
-		var opmodes = 15;
-		function openPrez(url, mode) {
-			try {
-				var margin = 40;
-				var top = margin, 
-					left = margin, 
-					width = screen.availWidth - 2 * margin, 
-					height = screen.availHeight - 4 * margin;
-				var styles = 'top=' + top + ',left=' + left + ',width=' + width + ',height=' + height
-					+ ',location=no,toolbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes';
-				var owin = window.open(encodeURI(url), '_blank', styles);
-				if (owin)
-					owin.focus();
-			}
-			catch (e) {
-				alert(language.OpenPrezError + e);
-			}
-			return false;
-		};
-	</script>
-</head>
+<p><code class="language-plaintext highlighter-rouge">Demonstration of how Bronn reacts to a neutral user greeting.</code></p>
 
-<body>
-	<div id="ap-top-container" class="ap-top-container">
-		<div class="ap-sub-container">
-			<div class="ap-layout-top">
-				<script>
-					var apInfoHTML = '<h1>Untitled</h1> \
-									<table> \
-										<tr> \
-											<td>' + language.Description + '</td> \
-											<td class="ap-left-indent" ></td> \
-										</tr> \
-										<tr> \
-											<td>' +language.Author + '</td> \
-											<td class="ap-left-indent">User</td> \
-										</tr> \
-										<tr> \
-											<td>' + language.Copyright + '</td> \
-											<td class="ap-left-indent"></td> \
-										</tr> \
-										<tr> \
-											<td>' + language.Homepage + '</td> \
-											<td class="ap-left-indent"><a href="" target="_blank"></a></td> \
-										</tr>\
-									</table> \
-									<div class="ap-static-line"> \
-									</div>';
+<p><img src="./images/bronn-demo.png" alt="Bronn intro demo" /></p>
 
-					var container = document.getElementById('ap-top-container');
-					var layoutTop = container.getElementsByClassName('ap-layout-top')[0];
-					var apInfo = document.createElement('div');
-					apInfo.classList.add('ap-info');
-					apInfo.innerHTML = apInfoHTML;
-					layoutTop.appendChild(apInfo);
-				</script>
-			</div>
-		</div>
-		<div class="ap-layout-bottom-container">
-			<div class="ap-layout-bottom">
-				<script>
-					var container = document.getElementById('ap-top-container');
-					var layoutBottom = container.getElementsByClassName('ap-layout-bottom')[0];
-					
-					var modes = [PlayModes.DEMO, PlayModes.TUT, PlayModes.PRAC, PlayModes.TEST];
-					var classes = ['ap-operation-demo-btn', 'ap-operation-tutorial-btn', 'ap-operation-practice-btn', 'ap-operation-test-btn'];
-					var pages = ['demo.html', 'tutorial.html', 'practice.html', 'test.html'];
-					var titles = [language.DemoIntro, language.TutorialIntro, language.PracticeIntro, language.TestIntro];
-					var texts = [language.Demo, language.Tutorial, language.Practice, language.Test];
-					var icons = ['demo.png', 'tutorial.png', 'practice.png', 'test.png'];
+<h2 id="prerequisites">Prerequisites</h2>
 
-					for (var i = 0; i < 4; ++i){
-						if ((modes[i] & opmodes) != modes[i])
-							continue;
-						var btnMode = document.createElement('div');
-						btnMode.classList.add('ap-operation-btn');
-						btnMode.classList.add(classes[i]);
-						btnMode.setAttribute('title', titles[i]);
-						btnMode.setAttribute('onClick', 'openPrez("' + pages[i] +'")', titles[i]);
-						btnMode.innerHTML += '<img src="index-images/' + icons[i] + '"/>' + '<div class="ap-btn-text">' + texts[i] + '</div>';
-						layoutBottom.appendChild(btnMode);
-					}
-				</script>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
+<h3 id="install-python-36---38">Install ASP.NET Core Runtime 3.1</h3>
+<p>You'll need to have ASP.NET Core Runtime 3.1 installed to be able to create new bots from templates and run Bronn locally.</p>
+
+<h3 id="download-the-code">Download the code</h3>
+<p>You can find the bot code at its <a href="https://github.com/DirenBodom/Music-Bot">Github Repository</a>. Make sure that you are using the master branch.</p>
+
+<h3 id="running-the-sample">Running the sample</h3>
+<ul>
+  <li>Run the following commmads to install the necessary dependencies inside your project folder:</li>
+  <p><code class="language-plaintext highlighter-rouge">dotnet new -i Microsoft.Bot.Builder.AI.Luis</code></p>
+  <p><code class="language-plaintext highlighter-rouge">dotnet new -i Microsoft.Bot.Builder.Dialogs</code></p>
+  <li>Run <code class="language-plaintext highlighter-rouge">dotnet new --list</code> to verify your installed packages.</li>
+</ul>
+
+<h3 id="testing-the-bot-using-bot-framework-emulator">Testing the bot using Bot Framework Emulator</h3>
+
+<p><a href="https://github.com/microsoft/botframework-emulator">Bot Framework Emulator</a> is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.</p>
+
+<ul>
+  <li>Install the Bot Framework Emulator version 4.3.0 or greater from <a href="https://github.com/Microsoft/BotFramework-Emulator/releases">here</a></li>
+</ul>
+
+<h3 id="connect-to-the-bot-using-bot-framework-emulator">Connect to the bot using Bot Framework Emulator</h3>
+
+<ul>
+  <li>Launch Bot Framework Emulator</li>
+  <li>Enter a Bot URL of <code class="language-plaintext highlighter-rouge">http://localhost:3978/api/messages</code></li>
+</ul>
+
+<h2 id="key-components">Key Components</h2>
+
+<p>The bot’s main features currently are:</p>
+<ul>
+  <li>A Waterfall dialogs which maintain a continous conversation with the users</li>
+  <li>Adaptive cards that provide key information for recommended songs, album art, and a link for the user to learn more about the recommendation</li>
+  <li>Default data set of available recommendations, consisting of songs from multiple genres</li>
+  <li>Interruption handling that give the user options to end the conversation</li>
+  <li>Natural language processing through the Luis AI. This enables detection of user’s feelings and genre detection.</li>
+</ul>
+
+<h3 id="dialogs">Dialogs</h3>
+
+<p>The bot's conversational flow is currently orchestrated through a single Waterfall dialog. It handles the NLP processing of the user's input as well as generating prompts to retrieve user input.</p>
+
+<p>You can see how the dialog is created upon a user being added:
+<code class="language-plaintext highlighter-rouge">MusicBot.cs lines 44-57</code></p>
+<pre><code class="language-Python3">
+protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
+{
+    var welcomeText = "Hello, I am the music recommending bot Bronn!";
+    foreach (var member in membersAdded)
+    {
+        if (member.Id != turnContext.Activity.Recipient.Id)
+        {
+            await turnContext.SendActivityAsync(MessageFactory.Text(welcomeText, welcomeText), cancellationToken);
+            await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
+        }
+    }
+}
+ 
+</code></pre>
+
+<p>Within the RecommendationDialog's constructor, you can see the chronological order in which the bot will collect user input. At first there's an introduction step which handles the initial greeting. Then the 
+<code class="language-plaintext highlighter-rouge">GenreStepAsync</code> and the <code class="language-plaintext highlighter-rouge">RecommendationStepAsync</code> steps retrieve a genre and compute a song from
+the given genre respectively. Finally the confirmation step determines whether to keep suggesting songs from the same genre or to trace back to the genre step.</p>
+
+<p><code class="language-plaintext highlighter-rouge">dialogs/RecommendationDialog.cs lines 25-33</code></p>
+<pre><code class="language-Python3">
+// This array defines how the Waterfall will execute.
+var waterfallSteps = new WaterfallStep[]
+{
+    IntroStepAsync,
+    GenreStepAsync,
+    RecommendationStepAsync,
+    ConfirmationStepAsync,
+};
+
+</code></pre>
+
+<h3 id="adaptive-cards">Adaptive Cards</h3>
+
+<p>Adaptive cards enhance the user’s experience by showing song information, album art, and providing a link to open the song in a browser. To achieve this feature, the skeleton of the card is formed from
+the <code class="language-plaintext highlighter-rouge">cards/songCard.json</code> file.</p>
+
+<p><img src="./images/adaptive-card-song.png" alt="Adaptive Card song display" /></p>
+
+<p>Once the <code class="language-plaintext highlighter-rouge">RecommendationStepAsync</code> has computed a song to recommend, it reads the <em>songCard.json</em> file and updates the default values based on the selected song. Since each song is created using
+the <code class="language-plaintext highlighter-rouge">Song.cs</code>, extracting song properties is as simple as writing <code class="language-plaintext highlighter-rouge">song.artist</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">dialogs/RecommendationDialog.cs lines 360-371</code></p>
+<pre><code class="language-Python3">
+// Retrieve random song from the given genre
+Random rand = new Random();
+int genreCount = rand.Next(songs[Genre].Count);
+Song song = songs[Genre][genreCount];
+
+string messageText = "I recommend listening to:";
+var message = MessageFactory.Text(messageText);
+await stepContext.Context.SendActivityAsync(message, cancellationToken);
+            
+// Show card for this song
+var cardAttachment = CreateAdaptiveCardAttachment(song.artist, song.name, song.album, song.url);
+var response = MessageFactory.Attachment(cardAttachment);
+</code></pre>
+
+<h3 id="interruptions">Interruptions</h3>
+
+<p>Currently the bot supports a termination interruption to end the conversation. To achieve this, every time the dialogue continues; the program checks for termination keywords.
+Once the user triggers this interruption, all dialogues are immediately canceled.</p>
